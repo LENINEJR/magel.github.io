@@ -9,8 +9,6 @@
         <link rel="stylesheet" href="css/leaflet.css"><link rel="stylesheet" href="css/L.Control.Locate.min.css">
         <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
         <link rel="stylesheet" href="css/leaflet-search.css">
-        <link rel="stylesheet" href="css/leaflet-control-geocoder.Geocoder.css">
-        <link rel="stylesheet" href="css/leaflet-measure.css">
         <style>
         html, body, #map {
             width: 100%;
@@ -34,13 +32,12 @@
         <script src="js/rbush.min.js"></script>
         <script src="js/labelgun.min.js"></script>
         <script src="js/labels.js"></script>
-        <script src="js/leaflet-control-geocoder.Geocoder.js"></script>
-        <script src="js/leaflet-measure.js"></script>
         <script src="js/leaflet-search.js"></script>
-        <script src="data/ZONEDINTERVENTIONDESPROJETSAGRICOLESETELEVAGES_1.js"></script>
-        <script src="data/PLAINES_2.js"></script>
-        <script src="data/ROUTE_3.js"></script>
-        <script src="data/Cartedesinfrastructuresagricoles_4.js"></script>
+        <script src="data/LIMITESOUSPREFECTURE_1.js"></script>
+        <script src="data/ROUTE_2.js"></script>
+        <script src="data/DOMAINEAGRICOLE_3.js"></script>
+        <script src="data/ZONEDINTERVENTIONDESPROJETSAGRICOLESETELEVAGES_4.js"></script>
+        <script src="data/Cartedesinfrastructuresagricoles_5.js"></script>
         <script>
         var highlightLayer;
         function highlightFeature(e) {
@@ -64,18 +61,6 @@
         map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
         var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
         L.control.locate({locateOptions: {maxZoom: 19}}).addTo(map);
-        var measureControl = new L.Control.Measure({
-            position: 'topleft',
-            primaryLengthUnit: 'feet',
-            secondaryLengthUnit: 'miles',
-            primaryAreaUnit: 'sqfeet',
-            secondaryAreaUnit: 'sqmiles'
-        });
-        measureControl.addTo(map);
-        document.getElementsByClassName('leaflet-control-measure-toggle')[0]
-        .innerHTML = '';
-        document.getElementsByClassName('leaflet-control-measure-toggle')[0]
-        .className += ' fas fa-ruler';
         var bounds_group = new L.featureGroup([]);
         function setBounds() {
             if (bounds_group.getLayers().length) {
@@ -96,7 +81,7 @@
         });
         layer_OpenStreetMap_0;
         map.addLayer(layer_OpenStreetMap_0);
-        function pop_ZONEDINTERVENTIONDESPROJETSAGRICOLESETELEVAGES_1(feature, layer) {
+        function pop_LIMITESOUSPREFECTURE_1(feature, layer) {
             layer.on({
                 mouseout: function(e) {
                     for (i in e.target._eventParents) {
@@ -107,133 +92,46 @@
             });
             var popupContent = '<table>\
                     <tr>\
-                        <td colspan="2">' + (feature.properties['id'] !== null ? autolinker.link(feature.properties['id'].toLocaleString()) : '') + '</td>\
+                        <td colspan="2"><strong>SOUS-PREFECTURE </strong> ' + (feature.properties['ADM3_NAME'] !== null ? autolinker.link(feature.properties['ADM3_NAME'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <td colspan="2">' + (feature.properties['PROJET'] !== null ? autolinker.link(feature.properties['PROJET'].toLocaleString()) : '') + '</td>\
+                        <td colspan="2"> <strong>PREFECTURE </strong>' + (feature.properties['ADM2_NAME'] !== null ? autolinker.link(feature.properties['ADM2_NAME'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <td colspan="2">' + (feature.properties['PREFECTURE'] !== null ? autolinker.link(feature.properties['PREFECTURE'].toLocaleString()) : '') + '</td>\
+                        <td colspan="2"><strong>REGION </strong>' + (feature.properties['ADM1_NAME'] !== null ? autolinker.link(feature.properties['ADM1_NAME'].toLocaleString()) : '') + '</td>\
                     </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['SOUS_PREFE'] !== null ? autolinker.link(feature.properties['SOUS_PREFE'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                </table>';
+                    </table>';
             layer.bindPopup(popupContent, {maxHeight: 400});
         }
 
-        function style_ZONEDINTERVENTIONDESPROJETSAGRICOLESETELEVAGES_1_0(feature) {
-            switch(String(feature.properties['PROJET'])) {
-                case 'AGRICOLE':
-                    return {
-                pane: 'pane_ZONEDINTERVENTIONDESPROJETSAGRICOLESETELEVAGES_1',
-                radius: 5.999999999999998,
-                opacity: 1,
-                color: 'rgba(247,247,247,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 2.0,
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(10,88,79,1.0)',
-                interactive: true,
-            }
-                    break;
-                case 'ELEVAGE':
-                    return {
-                pane: 'pane_ZONEDINTERVENTIONDESPROJETSAGRICOLESETELEVAGES_1',
-                radius: 5.999999999999998,
-                opacity: 1,
-                color: 'rgba(247,247,247,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 2.0,
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(199,28,37,1.0)',
-                interactive: true,
-            }
-                    break;
-            }
-        }
-        map.createPane('pane_ZONEDINTERVENTIONDESPROJETSAGRICOLESETELEVAGES_1');
-        map.getPane('pane_ZONEDINTERVENTIONDESPROJETSAGRICOLESETELEVAGES_1').style.zIndex = 401;
-        map.getPane('pane_ZONEDINTERVENTIONDESPROJETSAGRICOLESETELEVAGES_1').style['mix-blend-mode'] = 'normal';
-        var layer_ZONEDINTERVENTIONDESPROJETSAGRICOLESETELEVAGES_1 = new L.geoJson(json_ZONEDINTERVENTIONDESPROJETSAGRICOLESETELEVAGES_1, {
-            attribution: '',
-            interactive: true,
-            dataVar: 'json_ZONEDINTERVENTIONDESPROJETSAGRICOLESETELEVAGES_1',
-            layerName: 'layer_ZONEDINTERVENTIONDESPROJETSAGRICOLESETELEVAGES_1',
-            pane: 'pane_ZONEDINTERVENTIONDESPROJETSAGRICOLESETELEVAGES_1',
-            onEachFeature: pop_ZONEDINTERVENTIONDESPROJETSAGRICOLESETELEVAGES_1,
-            pointToLayer: function (feature, latlng) {
-                var context = {
-                    feature: feature,
-                    variables: {}
-                };
-                return L.circleMarker(latlng, style_ZONEDINTERVENTIONDESPROJETSAGRICOLESETELEVAGES_1_0(feature));
-            },
-        });
-        bounds_group.addLayer(layer_ZONEDINTERVENTIONDESPROJETSAGRICOLESETELEVAGES_1);
-        map.addLayer(layer_ZONEDINTERVENTIONDESPROJETSAGRICOLESETELEVAGES_1);
-        function pop_PLAINES_2(feature, layer) {
-            layer.on({
-                mouseout: function(e) {
-                    for (i in e.target._eventParents) {
-                        e.target._eventParents[i].resetStyle(e.target);
-                    }
-                },
-                mouseover: highlightFeature,
-            });
-            var popupContent = '<table>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['id'] !== null ? autolinker.link(feature.properties['id'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['NOM'] !== null ? autolinker.link(feature.properties['NOM'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['PREFECTURE'] !== null ? autolinker.link(feature.properties['PREFECTURE'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['SUPERFICIE'] !== null ? autolinker.link(feature.properties['SUPERFICIE'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                </table>';
-            layer.bindPopup(popupContent, {maxHeight: 400});
-        }
-
-        function style_PLAINES_2_0() {
+        function style_LIMITESOUSPREFECTURE_1_0() {
             return {
-                pane: 'pane_PLAINES_2',
+                pane: 'pane_LIMITESOUSPREFECTURE_1',
                 opacity: 1,
                 color: 'rgba(35,35,35,1.0)',
                 dashArray: '',
                 lineCap: 'butt',
                 lineJoin: 'miter',
                 weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(237,218,126,1.0)',
+                fillOpacity: 0,
                 interactive: true,
             }
         }
-        map.createPane('pane_PLAINES_2');
-        map.getPane('pane_PLAINES_2').style.zIndex = 402;
-        map.getPane('pane_PLAINES_2').style['mix-blend-mode'] = 'normal';
-        var layer_PLAINES_2 = new L.geoJson(json_PLAINES_2, {
+        map.createPane('pane_LIMITESOUSPREFECTURE_1');
+        map.getPane('pane_LIMITESOUSPREFECTURE_1').style.zIndex = 401;
+        map.getPane('pane_LIMITESOUSPREFECTURE_1').style['mix-blend-mode'] = 'normal';
+        var layer_LIMITESOUSPREFECTURE_1 = new L.geoJson(json_LIMITESOUSPREFECTURE_1, {
             attribution: '',
             interactive: true,
-            dataVar: 'json_PLAINES_2',
-            layerName: 'layer_PLAINES_2',
-            pane: 'pane_PLAINES_2',
-            onEachFeature: pop_PLAINES_2,
-            style: style_PLAINES_2_0,
+            dataVar: 'json_LIMITESOUSPREFECTURE_1',
+            layerName: 'layer_LIMITESOUSPREFECTURE_1',
+            pane: 'pane_LIMITESOUSPREFECTURE_1',
+            onEachFeature: pop_LIMITESOUSPREFECTURE_1,
+            style: style_LIMITESOUSPREFECTURE_1_0,
         });
-        bounds_group.addLayer(layer_PLAINES_2);
-        map.addLayer(layer_PLAINES_2);
-        function pop_ROUTE_3(feature, layer) {
+        bounds_group.addLayer(layer_LIMITESOUSPREFECTURE_1);
+        map.addLayer(layer_LIMITESOUSPREFECTURE_1);
+        function pop_ROUTE_2(feature, layer) {
             layer.on({
                 mouseout: function(e) {
                     for (i in e.target._eventParents) {
@@ -253,40 +151,33 @@
                         <td colspan="2">' + (feature.properties['fclass'] !== null ? autolinker.link(feature.properties['fclass'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <th scope="row">name</th>\
-                        <td>' + (feature.properties['name'] !== null ? autolinker.link(feature.properties['name'].toLocaleString()) : '') + '</td>\
+                        <td colspan="2">' + (feature.properties['name'] !== null ? autolinker.link(feature.properties['name'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <th scope="row">ref</th>\
-                        <td>' + (feature.properties['ref'] !== null ? autolinker.link(feature.properties['ref'].toLocaleString()) : '') + '</td>\
+                        <td colspan="2">' + (feature.properties['ref'] !== null ? autolinker.link(feature.properties['ref'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <th scope="row">oneway</th>\
-                        <td>' + (feature.properties['oneway'] !== null ? autolinker.link(feature.properties['oneway'].toLocaleString()) : '') + '</td>\
+                        <td colspan="2">' + (feature.properties['oneway'] !== null ? autolinker.link(feature.properties['oneway'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <th scope="row">maxspeed</th>\
-                        <td>' + (feature.properties['maxspeed'] !== null ? autolinker.link(feature.properties['maxspeed'].toLocaleString()) : '') + '</td>\
+                        <td colspan="2">' + (feature.properties['maxspeed'] !== null ? autolinker.link(feature.properties['maxspeed'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <th scope="row">layer</th>\
-                        <td>' + (feature.properties['layer'] !== null ? autolinker.link(feature.properties['layer'].toLocaleString()) : '') + '</td>\
+                        <td colspan="2">' + (feature.properties['layer'] !== null ? autolinker.link(feature.properties['layer'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <th scope="row">bridge</th>\
-                        <td>' + (feature.properties['bridge'] !== null ? autolinker.link(feature.properties['bridge'].toLocaleString()) : '') + '</td>\
+                        <td colspan="2">' + (feature.properties['bridge'] !== null ? autolinker.link(feature.properties['bridge'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <th scope="row">tunnel</th>\
-                        <td>' + (feature.properties['tunnel'] !== null ? autolinker.link(feature.properties['tunnel'].toLocaleString()) : '') + '</td>\
+                        <td colspan="2">' + (feature.properties['tunnel'] !== null ? autolinker.link(feature.properties['tunnel'].toLocaleString()) : '') + '</td>\
                     </tr>\
                 </table>';
             layer.bindPopup(popupContent, {maxHeight: 400});
         }
 
-        function style_ROUTE_3_0() {
+        function style_ROUTE_2_0() {
             return {
-                pane: 'pane_ROUTE_3',
+                pane: 'pane_ROUTE_2',
                 opacity: 1,
                 color: 'rgba(215,25,28,1.0)',
                 dashArray: '',
@@ -297,21 +188,21 @@
                 interactive: true,
             }
         }
-        map.createPane('pane_ROUTE_3');
-        map.getPane('pane_ROUTE_3').style.zIndex = 403;
-        map.getPane('pane_ROUTE_3').style['mix-blend-mode'] = 'normal';
-        var layer_ROUTE_3 = new L.geoJson(json_ROUTE_3, {
+        map.createPane('pane_ROUTE_2');
+        map.getPane('pane_ROUTE_2').style.zIndex = 402;
+        map.getPane('pane_ROUTE_2').style['mix-blend-mode'] = 'normal';
+        var layer_ROUTE_2 = new L.geoJson(json_ROUTE_2, {
             attribution: '',
             interactive: true,
-            dataVar: 'json_ROUTE_3',
-            layerName: 'layer_ROUTE_3',
-            pane: 'pane_ROUTE_3',
-            onEachFeature: pop_ROUTE_3,
-            style: style_ROUTE_3_0,
+            dataVar: 'json_ROUTE_2',
+            layerName: 'layer_ROUTE_2',
+            pane: 'pane_ROUTE_2',
+            onEachFeature: pop_ROUTE_2,
+            style: style_ROUTE_2_0,
         });
-        bounds_group.addLayer(layer_ROUTE_3);
-        map.addLayer(layer_ROUTE_3);
-        function pop_Cartedesinfrastructuresagricoles_4(feature, layer) {
+        bounds_group.addLayer(layer_ROUTE_2);
+        map.addLayer(layer_ROUTE_2);
+        function pop_DOMAINEAGRICOLE_3(feature, layer) {
             layer.on({
                 mouseout: function(e) {
                     for (i in e.target._eventParents) {
@@ -322,8 +213,181 @@
             });
             var popupContent = '<table>\
                     <tr>\
-                        <td colspan="2">' + (feature.properties['id'] !== null ? autolinker.link(feature.properties['id'].toLocaleString()) : '') + '</td>\
+                        <th scope="row">Type</th>\
+                        <td>' + (feature.properties['Type'] !== null ? autolinker.link(feature.properties['Type'].toLocaleString()) : '') + '</td>\
                     </tr>\
+                    <tr>\
+                        <th scope="row">AREA</th>\
+                        <td>' + (feature.properties['AREA'] !== null ? autolinker.link(feature.properties['AREA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">PREFECTURE</th>\
+                        <td>' + (feature.properties['PREFECTURE'] !== null ? autolinker.link(feature.properties['PREFECTURE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">PROPRIETE</th>\
+                        <td>' + (feature.properties['PROPRIETE'] !== null ? autolinker.link(feature.properties['PROPRIETE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">EXPLOITANT</th>\
+                        <td>' + (feature.properties['EXPLOITANT'] !== null ? autolinker.link(feature.properties['EXPLOITANT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">STATUS</th>\
+                        <td>' + (feature.properties['STATUS'] !== null ? autolinker.link(feature.properties['STATUS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">CULTURE</th>\
+                        <td>' + (feature.properties['CULTURE'] !== null ? autolinker.link(feature.properties['CULTURE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_DOMAINEAGRICOLE_3_0(feature) {
+            switch(String(feature.properties['Type'])) {
+                case 'BAFONDS':
+                    return {
+                pane: 'pane_DOMAINEAGRICOLE_3',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(250,201,11,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'PLAINE':
+                    return {
+                pane: 'pane_DOMAINEAGRICOLE_3',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(197,227,255,1.0)',
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_DOMAINEAGRICOLE_3');
+        map.getPane('pane_DOMAINEAGRICOLE_3').style.zIndex = 403;
+        map.getPane('pane_DOMAINEAGRICOLE_3').style['mix-blend-mode'] = 'normal';
+        var layer_DOMAINEAGRICOLE_3 = new L.geoJson(json_DOMAINEAGRICOLE_3, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_DOMAINEAGRICOLE_3',
+            layerName: 'layer_DOMAINEAGRICOLE_3',
+            pane: 'pane_DOMAINEAGRICOLE_3',
+            onEachFeature: pop_DOMAINEAGRICOLE_3,
+            style: style_DOMAINEAGRICOLE_3_0,
+        });
+        bounds_group.addLayer(layer_DOMAINEAGRICOLE_3);
+        map.addLayer(layer_DOMAINEAGRICOLE_3);
+        function pop_ZONEDINTERVENTIONDESPROJETSAGRICOLESETELEVAGES_4(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">PROJET</th>\
+                        <td>' + (feature.properties['PROJET'] !== null ? autolinker.link(feature.properties['PROJET'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">PREFECTURE</th>\
+                        <td>' + (feature.properties['PREFECTURE'] !== null ? autolinker.link(feature.properties['PREFECTURE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SOUS_PREFE</th>\
+                        <td>' + (feature.properties['SOUS_PREFE'] !== null ? autolinker.link(feature.properties['SOUS_PREFE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">FINANCEMT</th>\
+                        <td>' + (feature.properties['FINANCEMT'] !== null ? autolinker.link(feature.properties['FINANCEMT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_ZONEDINTERVENTIONDESPROJETSAGRICOLESETELEVAGES_4_0(feature) {
+            switch(String(feature.properties['PROJET'])) {
+                case 'AGRICOLE':
+                    return {
+                pane: 'pane_ZONEDINTERVENTIONDESPROJETSAGRICOLESETELEVAGES_4',
+                radius: 6.0,
+                opacity: 1,
+                color: 'rgba(247,247,247,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(10,88,79,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'ELEVAGE':
+                    return {
+                pane: 'pane_ZONEDINTERVENTIONDESPROJETSAGRICOLESETELEVAGES_4',
+                radius: 6.0,
+                opacity: 1,
+                color: 'rgba(247,247,247,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(199,28,37,1.0)',
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_ZONEDINTERVENTIONDESPROJETSAGRICOLESETELEVAGES_4');
+        map.getPane('pane_ZONEDINTERVENTIONDESPROJETSAGRICOLESETELEVAGES_4').style.zIndex = 404;
+        map.getPane('pane_ZONEDINTERVENTIONDESPROJETSAGRICOLESETELEVAGES_4').style['mix-blend-mode'] = 'normal';
+        var layer_ZONEDINTERVENTIONDESPROJETSAGRICOLESETELEVAGES_4 = new L.geoJson(json_ZONEDINTERVENTIONDESPROJETSAGRICOLESETELEVAGES_4, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_ZONEDINTERVENTIONDESPROJETSAGRICOLESETELEVAGES_4',
+            layerName: 'layer_ZONEDINTERVENTIONDESPROJETSAGRICOLESETELEVAGES_4',
+            pane: 'pane_ZONEDINTERVENTIONDESPROJETSAGRICOLESETELEVAGES_4',
+            onEachFeature: pop_ZONEDINTERVENTIONDESPROJETSAGRICOLESETELEVAGES_4,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_ZONEDINTERVENTIONDESPROJETSAGRICOLESETELEVAGES_4_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_ZONEDINTERVENTIONDESPROJETSAGRICOLESETELEVAGES_4);
+        map.addLayer(layer_ZONEDINTERVENTIONDESPROJETSAGRICOLESETELEVAGES_4);
+        function pop_Cartedesinfrastructuresagricoles_5(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
                     <tr>\
                         <th scope="row">NOM</th>\
                         <td>' + (feature.properties['NOM'] !== null ? autolinker.link(feature.properties['NOM'].toLocaleString()) : '') + '</td>\
@@ -336,74 +400,64 @@
             layer.bindPopup(popupContent, {maxHeight: 400});
         }
 
-        function style_Cartedesinfrastructuresagricoles_4_0() {
+        function style_Cartedesinfrastructuresagricoles_5_0() {
             return {
-                pane: 'pane_Cartedesinfrastructuresagricoles_4',
+                pane: 'pane_Cartedesinfrastructuresagricoles_5',
         rotationAngle: 0.0,
         rotationOrigin: 'center center',
         icon: L.icon({
             iconUrl: 'markers/background_square_rounded.svg',
-            iconSize: [13.67999999999999, 13.67999999999999]
+            iconSize: [13.68, 13.68]
         }),
                 interactive: true,
             }
         }
-        function style_Cartedesinfrastructuresagricoles_4_1() {
+        function style_Cartedesinfrastructuresagricoles_5_1() {
             return {
-                pane: 'pane_Cartedesinfrastructuresagricoles_4',
+                pane: 'pane_Cartedesinfrastructuresagricoles_5',
         rotationAngle: 0.0,
         rotationOrigin: 'center center',
         icon: L.icon({
             iconUrl: 'markers/accommodation_camping.svg',
-            iconSize: [8.825806451612898, 8.825806451612898]
+            iconSize: [8.825804, 8.825804]
         }),
                 interactive: true,
             }
         }
-        map.createPane('pane_Cartedesinfrastructuresagricoles_4');
-        map.getPane('pane_Cartedesinfrastructuresagricoles_4').style.zIndex = 404;
-        map.getPane('pane_Cartedesinfrastructuresagricoles_4').style['mix-blend-mode'] = 'normal';
-        var layer_Cartedesinfrastructuresagricoles_4 = new L.geoJson.multiStyle(json_Cartedesinfrastructuresagricoles_4, {
+        map.createPane('pane_Cartedesinfrastructuresagricoles_5');
+        map.getPane('pane_Cartedesinfrastructuresagricoles_5').style.zIndex = 405;
+        map.getPane('pane_Cartedesinfrastructuresagricoles_5').style['mix-blend-mode'] = 'normal';
+        var layer_Cartedesinfrastructuresagricoles_5 = new L.geoJson.multiStyle(json_Cartedesinfrastructuresagricoles_5, {
             attribution: '',
             interactive: true,
-            dataVar: 'json_Cartedesinfrastructuresagricoles_4',
-            layerName: 'layer_Cartedesinfrastructuresagricoles_4',
-            pane: 'pane_Cartedesinfrastructuresagricoles_4',
-            onEachFeature: pop_Cartedesinfrastructuresagricoles_4,
+            dataVar: 'json_Cartedesinfrastructuresagricoles_5',
+            layerName: 'layer_Cartedesinfrastructuresagricoles_5',
+            pane: 'pane_Cartedesinfrastructuresagricoles_5',
+            onEachFeature: pop_Cartedesinfrastructuresagricoles_5,
             pointToLayers: [function (feature, latlng) {
                 var context = {
                     feature: feature,
                     variables: {}
                 };
-                return L.marker(latlng, style_Cartedesinfrastructuresagricoles_4_0(feature));
+                return L.marker(latlng, style_Cartedesinfrastructuresagricoles_5_0(feature));
             },function (feature, latlng) {
                 var context = {
                     feature: feature,
                     variables: {}
                 };
-                return L.marker(latlng, style_Cartedesinfrastructuresagricoles_4_1(feature));
+                return L.marker(latlng, style_Cartedesinfrastructuresagricoles_5_1(feature));
             },
         ]});
-        bounds_group.addLayer(layer_Cartedesinfrastructuresagricoles_4);
-        map.addLayer(layer_Cartedesinfrastructuresagricoles_4);
-        var osmGeocoder = new L.Control.Geocoder({
-            collapsed: true,
-            position: 'topleft',
-            text: 'Search',
-            title: 'Testing'
-        }).addTo(map);
-        document.getElementsByClassName('leaflet-control-geocoder-icon')[0]
-        .className += ' fa fa-search';
-        document.getElementsByClassName('leaflet-control-geocoder-icon')[0]
-        .title += 'Search for a place';
+        bounds_group.addLayer(layer_Cartedesinfrastructuresagricoles_5);
+        map.addLayer(layer_Cartedesinfrastructuresagricoles_5);
         var baseMaps = {};
-        L.control.layers(baseMaps,{'<img src="legend/Cartedesinfrastructuresagricoles_4.png" /> Carte des infrastructures agricoles': layer_Cartedesinfrastructuresagricoles_4,'<img src="legend/ROUTE_3.png" /> ROUTE': layer_ROUTE_3,'<img src="legend/PLAINES_2.png" /> PLAINES': layer_PLAINES_2,'ZONE D\'INTERVENTION DES PROJETS AGRICOLES ET ELEVAGES<br /><table><tr><td style="text-align: center;"><img src="legend/ZONEDINTERVENTIONDESPROJETSAGRICOLESETELEVAGES_1_AGRICOLE0.png" /></td><td>AGRICOLE</td></tr><tr><td style="text-align: center;"><img src="legend/ZONEDINTERVENTIONDESPROJETSAGRICOLESETELEVAGES_1_ELEVAGE1.png" /></td><td>ELEVAGE</td></tr></table>': layer_ZONEDINTERVENTIONDESPROJETSAGRICOLESETELEVAGES_1,"OpenStreetMap": layer_OpenStreetMap_0,},{collapsed:false}).addTo(map);
+        L.control.layers(baseMaps,{'<img src="legend/Cartedesinfrastructuresagricoles_5.png" /> Carte des infrastructures agricoles': layer_Cartedesinfrastructuresagricoles_5,'ZONE D\'INTERVENTION DES PROJETS AGRICOLES ET ELEVAGES<br /><table><tr><td style="text-align: center;"><img src="legend/ZONEDINTERVENTIONDESPROJETSAGRICOLESETELEVAGES_4_AGRICOLE0.png" /></td><td>AGRICOLE</td></tr><tr><td style="text-align: center;"><img src="legend/ZONEDINTERVENTIONDESPROJETSAGRICOLESETELEVAGES_4_ELEVAGE1.png" /></td><td>ELEVAGE</td></tr></table>': layer_ZONEDINTERVENTIONDESPROJETSAGRICOLESETELEVAGES_4,'DOMAINE AGRICOLE<br /><table><tr><td style="text-align: center;"><img src="legend/DOMAINEAGRICOLE_3_BAFONDS0.png" /></td><td>BAFONDS</td></tr><tr><td style="text-align: center;"><img src="legend/DOMAINEAGRICOLE_3_PLAINE1.png" /></td><td>PLAINE</td></tr></table>': layer_DOMAINEAGRICOLE_3,'<img src="legend/ROUTE_2.png" /> ROUTE': layer_ROUTE_2,'<img src="legend/LIMITESOUSPREFECTURE_1.png" /> LIMITE SOUS -PREFECTURE': layer_LIMITESOUSPREFECTURE_1,"OpenStreetMap": layer_OpenStreetMap_0,},{collapsed:false}).addTo(map);
         setBounds();
         map.addControl(new L.Control.Search({
-            layer: layer_ZONEDINTERVENTIONDESPROJETSAGRICOLESETELEVAGES_1,
+            layer: layer_ZONEDINTERVENTIONDESPROJETSAGRICOLESETELEVAGES_4,
             initial: false,
             hideMarkerOnCollapse: true,
-            propertyName: 'SOUS_PREFE'}));
+            propertyName: 'PREFECTURE'}));
         document.getElementsByClassName('search-button')[0].className +=
          ' fa fa-binoculars';
         </script>
